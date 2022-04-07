@@ -1,9 +1,5 @@
 import("//build/ohos.gni")
 
-config("thirdparty_json_config") {
-  cflags_cc = [ "-fexceptions" ]
-}
-
 config("nlohmann_json_config") {
   include_dirs = [
     "include",
