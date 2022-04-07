@@ -1,7 +1,7 @@
 /*
     __ _____ _____ _____
  __|  |   __|     |   | |  JSON for Modern C++ (test suite)
-|  |  |__   |  |  | | | |  version 3.7.3
+|  |  |__   |  |  | | | |  version 3.9.1
 |_____|_____|_____|_|___|  https://github.com/nlohmann/json
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -114,6 +114,14 @@ TEST_CASE("constructors")
             json j(t);
             CHECK(j.type() == t);
             CHECK(j == 0.0);
+        }
+
+        SECTION("binary")
+        {
+            auto t = json::value_t::binary;
+            json j(t);
+            CHECK(j.type() == t);
+            CHECK(j == json::binary({}));
         }
     }
 
@@ -333,7 +341,7 @@ TEST_CASE("constructors")
             CHECK(j.type() == json::value_t::array);
             CHECK(j == json({1, 2, 3, 4, 5}));
 
-            std::valarray<int> jva = j;
+            auto jva = j.get<std::valarray<int>>();
             CHECK(jva.size() == va.size());
             for (size_t i = 0; i < jva.size(); ++i)
             {
@@ -348,7 +356,7 @@ TEST_CASE("constructors")
             CHECK(j.type() == json::value_t::array);
             CHECK(j == json({1.2, 2.3, 3.4, 4.5, 5.6}));
 
-            std::valarray<double> jva = j;
+            auto jva = j.get<std::valarray<double>>();
             CHECK(jva.size() == va.size());
             for (size_t i = 0; i < jva.size(); ++i)
             {
@@ -470,6 +478,23 @@ TEST_CASE("constructors")
         {
             json j(false);
             CHECK(j.type() == json::value_t::boolean);
+        }
+    }
+
+    SECTION("create a binary (explicit)")
+    {
+        SECTION("empty binary")
+        {
+            json::binary_t b{};
+            json j(b);
+            CHECK(j.type() == json::value_t::binary);
+        }
+
+        SECTION("filled binary")
+        {
+            json::binary_t b({1, 2, 3});
+            json j(b);
+            CHECK(j.type() == json::value_t::binary);
         }
     }
 
@@ -813,6 +838,21 @@ TEST_CASE("constructors")
             CHECK(j.type() == json::value_t::number_float);
         }
 
+        SECTION("NaN")
+        {
+            // NaN is stored properly, but serialized to null
+            json::number_float_t n(std::numeric_limits<json::number_float_t>::quiet_NaN());
+            json j(n);
+            CHECK(j.type() == json::value_t::number_float);
+
+            // check round trip of NaN
+            json::number_float_t d{j};
+            CHECK((std::isnan(d) && std::isnan(n)) == true);
+
+            // check that NaN is serialized to null
+            CHECK(j.dump() == "null");
+        }
+
         SECTION("infinity")
         {
             // infinity is stored properly, but serialized to null
@@ -821,7 +861,7 @@ TEST_CASE("constructors")
             CHECK(j.type() == json::value_t::number_float);
 
             // check round trip of infinity
-            json::number_float_t d = j;
+            json::number_float_t d{j};
             CHECK(d == n);
 
             // check that inf is serialized to null
@@ -1436,6 +1476,20 @@ TEST_CASE("constructors")
                         json j = 23.42;
                         json j_new(j.cbegin(), j.cend());
                         CHECK(j == j_new);
+                    }
+                }
+
+                SECTION("binary")
+                {
+                    {
+                        json j = json::binary({1, 2, 3});
+                        json j_new(j.begin(), j.end());
+                        CHECK((j == j_new));
+                    }
+                    {
+                        json j = json::binary({1, 2, 3});
+                        json j_new(j.cbegin(), j.cend());
+                        CHECK((j == j_new));
                     }
                 }
             }
