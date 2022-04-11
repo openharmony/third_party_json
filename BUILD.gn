@@ -4,7 +4,6 @@ config("third_party_json_config") {
   cflags_cc = [ "-fexceptions" ]
 }
 
-
 config("nlohmann_json_config") {
   include_dirs = [
     "include",
@@ -21,7 +20,6 @@ config("nlohmann_json_config") {
 
 ohos_static_library("nlohmann_json_static") {
   sources = [
-    "include/nlohmann/json.hpp",
     "include/nlohmann/adl_serializer.hpp",
     "include/nlohmann/byte_container_with_subtype.hpp",
     "include/nlohmann/detail/conversions/from_json.hpp",
@@ -46,6 +44,7 @@ ohos_static_library("nlohmann_json_static") {
     "include/nlohmann/detail/output/output_adapters.hpp",
     "include/nlohmann/detail/output/serializer.hpp",
     "include/nlohmann/detail/value_t.hpp",
+    "include/nlohmann/json.hpp",
     "include/nlohmann/json_fwd.hpp",
     "include/nlohmann/ordered_map.hpp",
   ]
@@ -61,9 +60,6 @@ config("nlohmann_json_single_config") {
 }
 
 ohos_static_library("nlohmann_json_single_static") {
-  sources = [
-    "single_include/nlohmann/json.hpp",
-  ]
+  sources = [ "single_include/nlohmann/json.hpp" ]
   public_configs = [ ":nlohmann_json_single_config" ]
 }
-
