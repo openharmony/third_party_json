@@ -1,7 +1,10 @@
 import("//build/ohos.gni")
 
 config("third_party_json_config") {
-  cflags_cc = [ "-fexceptions" ]
+  cflags_cc = [
+    "-fexceptions",
+    "-fvisibility=hidden",
+  ]
 }
 
 config("nlohmann_json_config") {
@@ -15,7 +18,10 @@ config("nlohmann_json_config") {
     "include/nlohmann/detail/meta",
     "include/nlohmann/detail/output",
   ]
-  cflags_cc = [ "-fexceptions" ]
+  cflags_cc = [
+    "-fexceptions",
+    "-fvisibility=hidden",
+  ]
 }
 
 ohos_static_library("nlohmann_json_static") {
@@ -56,7 +62,10 @@ config("nlohmann_json_single_config") {
     "single_include",
     "single_include/nlohmann",
   ]
-  cflags_cc = [ "-fexceptions" ]
+  cflags_cc = [
+    "-fexceptions",
+    "-fvisibility=hidden",
+  ]
 }
 
 ohos_static_library("nlohmann_json_single_static") {
