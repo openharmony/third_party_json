@@ -2,6 +2,7 @@
 
 #include <functional> // less
 #include <memory> // allocator
+#include <stdexcept> // for out_of_range
 #include <utility> // pair
 #include <vector> // vector
 
@@ -64,7 +65,7 @@ template <class Key, class T, class IgnoredLess = std::less<Key>,
             }
         }
 
-        throw std::out_of_range("key not found");
+        JSON_THROW(std::out_of_range("key not found"));
     }
 
     const T& at(const Key& key) const
@@ -77,7 +78,7 @@ template <class Key, class T, class IgnoredLess = std::less<Key>,
             }
         }
 
-        throw std::out_of_range("key not found");
+        JSON_THROW(std::out_of_range("key not found"));
     }
 
     size_type erase(const Key& key)
