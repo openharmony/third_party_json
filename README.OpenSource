@@ -2,7 +2,7 @@
   {
    "Name":"JSON for Modern C++",
    "License":"MIT License",
-   "License File":"LICENSE.md",
+   "License File":"LICENSE.MIT",
    "Version Number":"3.9.1",
    "Owner":"furuikai@huawei.com",
    "Upstream URL":"https://github.com/nlohmann/json",
