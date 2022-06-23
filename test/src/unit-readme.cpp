@@ -1,7 +1,7 @@
 /*
     __ _____ _____ _____
  __|  |   __|     |   | |  JSON for Modern C++ (test suite)
-|  |  |__   |  |  | | | |  version 3.10.0
+|  |  |__   |  |  | | | |  version 3.9.1
 |_____|_____|_____|_|___|  https://github.com/nlohmann/json
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -28,6 +28,7 @@ SOFTWARE.
 */
 
 #include "doctest_compatibility.h"
+DOCTEST_GCC_SUPPRESS_WARNING("-Wfloat-equal")
 
 #include <nlohmann/json.hpp>
 using nlohmann::json;
@@ -42,15 +43,16 @@ using nlohmann::json;
 #include <sstream>
 #include <iomanip>
 
-// local variable is initialized but not referenced
-DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
-DOCTEST_MSVC_SUPPRESS_WARNING(4189)
+#if defined(_MSC_VER)
+    #pragma warning (push)
+    #pragma warning (disable : 4189) // local variable is initialized but not referenced
+#endif
 
 TEST_CASE("README" * doctest::skip())
 {
     {
         // redirect std::cout for the README file
-        auto* old_cout_buffer = std::cout.rdbuf();
+        auto old_cout_buffer = std::cout.rdbuf();
         std::ostringstream new_stream;
         std::cout.rdbuf(new_stream.rdbuf());
         {
@@ -121,7 +123,7 @@ TEST_CASE("README" * doctest::skip())
 
         {
             // create object from string literal
-            json j = "{ \"happy\": true, \"pi\": 3.141 }"_json; // NOLINT(modernize-raw-string-literal)
+            json j = "{ \"happy\": true, \"pi\": 3.141 }"_json;
 
             // or even nicer with a raw string literal
             auto j2 = R"(
@@ -132,7 +134,7 @@ TEST_CASE("README" * doctest::skip())
         )"_json;
 
             // or explicitly
-            auto j3 = json::parse(R"({"happy": true, "pi": 3.141})");
+            auto j3 = json::parse("{ \"happy\": true, \"pi\": 3.141 }");
 
             // explicit conversion to string
             std::string s = j.dump();    // {\"happy\":true,\"pi\":3.141}
@@ -156,17 +158,17 @@ TEST_CASE("README" * doctest::skip())
             j.push_back(true);
 
             // comparison
-            bool x = (j == R"(["foo", 1, true])"_json);  // true
+            bool x = (j == "[\"foo\", 1, true]"_json);  // true
             CHECK(x == true);
 
             // iterate the array
-            for (json::iterator it = j.begin(); it != j.end(); ++it) // NOLINT(modernize-loop-convert)
+            for (json::iterator it = j.begin(); it != j.end(); ++it)
             {
                 std::cout << *it << '\n';
             }
 
             // range-based for
-            for (auto& element : j)
+            for (auto element : j)
             {
                 std::cout << element << '\n';
             }
@@ -320,4 +322,6 @@ TEST_CASE("README" * doctest::skip())
     }
 }
 
-DOCTEST_MSVC_SUPPRESS_WARNING_POP
+#if defined(_MSC_VER)
+    #pragma warning (pop)
+#endif
