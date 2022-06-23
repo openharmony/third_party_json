@@ -1,7 +1,7 @@
 /*
     __ _____ _____ _____
  __|  |   __|     |   | |  JSON for Modern C++ (test suite)
-|  |  |__   |  |  | | | |  version 3.10.0
+|  |  |__   |  |  | | | |  version 3.9.1
 |_____|_____|_____|_|___|  https://github.com/nlohmann/json
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -27,13 +27,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "doctest_compatibility.h"
-
 // avoid warning when assert does not abort
-DOCTEST_GCC_SUPPRESS_WARNING_PUSH
-DOCTEST_GCC_SUPPRESS_WARNING("-Wstrict-overflow")
-DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wstrict-overflow")
+#if defined(__GNUC__)
+    #pragma GCC diagnostic ignored "-Wstrict-overflow"
+#endif
+
+#include "doctest_compatibility.h"
 
 /// global variable to record side effect of assert calls
 static int assert_counter;
@@ -64,6 +63,3 @@ TEST_CASE("JSON_ASSERT(x)")
     }
 }
 #endif
-
-DOCTEST_GCC_SUPPRESS_WARNING_POP
-DOCTEST_CLANG_SUPPRESS_WARNING_POP

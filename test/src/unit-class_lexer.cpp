@@ -1,7 +1,7 @@
 /*
     __ _____ _____ _____
  __|  |   __|     |   | |  JSON for Modern C++ (test suite)
-|  |  |__   |  |  | | | |  version 3.10.0
+|  |  |__   |  |  | | | |  version 3.9.1
 |_____|_____|_____|_|___|  https://github.com/nlohmann/json
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -29,26 +29,27 @@ SOFTWARE.
 
 #include "doctest_compatibility.h"
 
-#define JSON_TESTS_PRIVATE
+#define private public
 #include <nlohmann/json.hpp>
 using nlohmann::json;
+#undef private
 
 namespace
 {
 // shortcut to scan a string literal
-json::lexer::token_type scan_string(const char* s, bool ignore_comments = false);
+json::lexer::token_type scan_string(const char* s, const bool ignore_comments = false);
 json::lexer::token_type scan_string(const char* s, const bool ignore_comments)
 {
     auto ia = nlohmann::detail::input_adapter(s);
-    return nlohmann::detail::lexer<json, decltype(ia)>(std::move(ia), ignore_comments).scan(); // NOLINT(hicpp-move-const-arg,performance-move-const-arg)
+    return nlohmann::detail::lexer<json, decltype(ia)>(std::move(ia), ignore_comments).scan();
 }
-} // namespace
+}
 
-std::string get_error_message(const char* s, bool ignore_comments = false);
+std::string get_error_message(const char* s, const bool ignore_comments = false);
 std::string get_error_message(const char* s, const bool ignore_comments)
 {
     auto ia = nlohmann::detail::input_adapter(s);
-    auto lexer = nlohmann::detail::lexer<json, decltype(ia)>(std::move(ia), ignore_comments); // NOLINT(hicpp-move-const-arg,performance-move-const-arg)
+    auto lexer = nlohmann::detail::lexer<json, decltype(ia)>(std::move(ia), ignore_comments);
     lexer.scan();
     return lexer.get_error_message();
 }
@@ -135,7 +136,7 @@ TEST_CASE("lexer class")
             // store scan() result
             const auto res = scan_string(s.c_str());
 
-            CAPTURE(s)
+            CAPTURE(s);
 
             switch (c)
             {
