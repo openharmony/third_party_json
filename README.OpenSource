@@ -1,6 +1,6 @@
 [
   {
-   "Name":"JSON for Modern C++",
+   "Name":"nlohmann/json",
    "License":"MIT License",
    "License File":"LICENSE.MIT",
    "Version Number":"3.9.1",
