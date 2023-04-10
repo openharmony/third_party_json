@@ -5,6 +5,9 @@ config("nlohmann_json_config") {
     "single_include/",
     "single_include/nlohmann",
   ]
+
+  cflags_cc = [ "-fexceptions" ]
+  cflags_objcc = cflags_cc
 }
 
 ohos_static_library("nlohmann_json_static") {
