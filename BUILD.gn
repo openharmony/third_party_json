@@ -12,6 +12,6 @@ config("nlohmann_json_config") {
 
 ohos_static_library("nlohmann_json_static") {
   public_configs = [ ":nlohmann_json_config" ]
-  part_name = "input"
-  subsystem_name = "multimodalinput"
+  part_name = "thirdparty_json"
+  subsystem_name = "thirdparty"
 }
