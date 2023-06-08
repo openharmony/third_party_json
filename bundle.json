@@ -11,7 +11,7 @@
     "scripts": {},
     "licensePath": "LICENSE.MIT",
     "component": {
-        "name": "thirdparty_json",
+        "name": "json",
         "subsystem": "thirdparty",
         "syscap": [],
         "features": [],
