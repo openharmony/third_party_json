@@ -11,11 +11,11 @@
     "scripts": {},
     "licensePath": "LICENSE.MIT",
     "component": {
-        "name": "thirdparty_json",
+        "name": "json",
         "subsystem": "thirdparty",
         "syscap": [],
         "features": [],
-        "adapted_system_type": [],
+        "adapted_system_type": [ "standard" ],
         "rom": "",
         "ram": "",
         "deps": {
