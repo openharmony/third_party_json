@@ -4,26 +4,8 @@
    "License":"MIT License",
    "License File":"LICENSE.MIT",
    "Version Number":"3.10.1",
-   "Owner":"houchengyu@huawei.com",
+   "Owner":"furuikai@huawei.com",
    "Upstream URL":"https://github.com/nlohmann/json",
    "Description": "The JSON for Modern C++ Library has intutitve syntax, trivial integration and memory efficiency features."
-  },
-  {
-   "Name":"amalgamate",
-   "License":"BSD-3-Clause",
-   "License File":"third_party/amalgamate/LICENSE.md",
-   "Version Number":"1.0",
-   "Owner":"houchengyu@huawei.com",
-   "Upstream URL":"https://github.com/edlund/amalgamate",
-   "Description": "amalgamate.py aims to make it easy to use SQLite-style C source and header amalgamation in projects."
-  },
-  {
-   "Name":"cpplint",
-   "License":"BSD-3-Clause",
-   "License File":"third_party/cpplint/LICENSE.md",
-   "Version Number":"1.4.4",
-   "Owner":"houchengyu@huawei.com",
-   "Upstream URL":https://github.com/cpplint/cpplint",
-   "Description": "Cpplint is a command-line tool to check C/C++ files for style issues following Google's C++ style guide."
   }
 ]
