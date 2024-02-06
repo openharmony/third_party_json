@@ -24,7 +24,15 @@
         },
         "build": {
             "sub_component": [],
-            "inner_kits": [],
+            "inner_kits": [
+                {
+                    "header": {
+                        "header_base": "//third_party/json/single_include",
+                        "header_files": []
+                    },
+                    "name": "//third_party/json:nlohmann_json_static"
+                }
+            ],
             "test": []
         }
     }
